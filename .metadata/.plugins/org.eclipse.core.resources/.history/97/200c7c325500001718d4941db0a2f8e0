@@ -1,0 +1,42 @@
+package mergesort;
+
+import java.util.Arrays;
+
+public class MergeSort {
+	public static void mergesort(int[] numList) {
+		if (numList.length > 1) {
+			int middleIndex = numList.length / 2;
+			int[] leftArray = Arrays.copyOfRange(numList, 0, middleIndex);
+			int[] rightArray = Arrays.copyOfRange(numList, middleIndex, numList.length);
+			mergesort(leftArray);
+			mergesort(rightArray);
+			merge(numList, leftArray, rightArray);
+		}
+	}
+
+	private static void merge(int[] numList, int[] leftArray, int[] rightArray) {
+		int leftIndex, rightIndex;
+		leftIndex = rightIndex = 0;
+		int i = 0;
+		while(leftIndex < leftArray.length && rightIndex<rightArray.length){
+			if (leftArray[leftIndex] <= rightArray[rightIndex]) {
+				numList[i] = leftArray[leftIndex];
+				leftIndex++;
+			} else {
+				numList[i] = rightArray[rightIndex];
+				rightIndex++;
+			}
+			i++
+			
+		}
+		/*for (int i = 0; i < numList.length; i++) {
+			if (leftIndex< leftArray.length && leftArray[leftIndex] <= rightArray[rightIndex]) {
+				numList[i] = leftArray[leftIndex];
+				leftIndex++;
+			} else {
+				numList[i] = rightArray[rightIndex];
+				rightIndex++;
+			}
+		}*/
+	}
+}

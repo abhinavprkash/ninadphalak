@@ -1,0 +1,13 @@
+package quicksort;
+
+import java.util.Arrays;
+
+public class Main {
+	
+	public static void main(String args[]){
+		
+		int[] inputArray = {3, 1, 2, 8, 5, 7, 6 , 4};
+		Quicksort.sort(inputArray,0,inputArray.length,0);
+		System.out.println("Sorted Array is: " + Arrays.toString(inputArray));
+	}
+}

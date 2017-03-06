@@ -1,0 +1,42 @@
+package quicksort;
+
+import java.util.Arrays;
+
+import javax.swing.plaf.synth.SynthSeparatorUI;
+
+public class Quicksort {
+
+	public static void sort(int[] numbers, int startIndex, int endIndex) {
+
+		if (startIndex < endIndex) {
+			int pivotIndex = partition(numbers, startIndex, endIndex);
+			sort(numbers, startIndex, pivotIndex);
+			sort(numbers, pivotIndex + 1, endIndex);
+		}
+	}
+
+	private static int partition(int[] numbers, int startIndex, int endIndex) {
+
+		int pivot = numbers[startIndex];
+		int i = startIndex + 1;
+		for (int j = startIndex + 1; j < endIndex; j++) {
+			if (numbers[j] < pivot) {// else numbers[j]>pivot so just increment
+										// j
+				// swap numbers[j] with leftmost element of right(greater than
+				// pivot) array
+				int temp = numbers[i];
+				numbers[i] = numbers[j];
+				numbers[j] = temp;
+				i++;
+			}
+		}
+		// swap numbers[startIndex with rightmost element of left(less than
+		// pivot) array
+		int temp = pivot;
+		System.out.println("pivot: " + pivot);
+		System.out.println("numbers[i-1]: " + numbers[i - 1]);
+		numbers[startIndex] = numbers[i - 1];
+		numbers[i - 1] = temp;
+		return i - 1;
+	}
+}

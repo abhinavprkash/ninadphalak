@@ -1,0 +1,9 @@
+package quicksort;
+
+
+public class Quicksort {
+	
+	int[] inputArray = {3, 1, 2, 8, 5, 7, 6 , 4};
+	
+	
+}

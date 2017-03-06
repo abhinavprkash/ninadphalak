@@ -1,0 +1,42 @@
+package mergesort;
+
+import java.util.ArrayList;
+
+public class MergeSort {
+	
+	public static int[] mergesort(int[] numList){
+		return internalMergeSort(numList,0,numList.length);
+		
+	}
+	
+	private static int[] internalMergeSort(int[] numList, int startIndex, int endIndex){
+		if(startIndex == endIndex) return numList;
+		
+		int middleIndex = (startIndex + endIndex) / 2;
+		int[] leftHalf = internalMergeSort(numList, 0, middleIndex);
+		int[] rightHalf = internalMergeSort(numList, middleIndex+1, endIndex);
+		
+		int[] sortedList = merge(leftHalf,rightHalf);
+		return sortedList;
+	}
+	
+	private static int[] merge(int[] leftHalf, int[] rightHalf){
+		
+		int leftIndex=0; 
+		int rightIndex = 0;
+		int totalLengthOfMergedArray = leftHalf.length + rightHalf.length;
+		int[] mergedArray = new int[totalLengthOfMergedArray];
+		for(int mergedIndex = 0 ; mergedIndex < totalLengthOfMergedArray ; mergedIndex++){
+			if(leftHalf[leftIndex] <= rightHalf[rightIndex]){
+				mergedArray[mergedIndex] = leftHalf[leftIndex];
+				leftIndex++;
+			}
+			else if(rightHalf[rightIndex] > leftHalf[leftIndex]){
+				mergedArray[mergedIndex] = rightHalf[rightIndex];
+			}
+		}
+		//mergedArray combines leftHalf and rightHalf in sorted order 
+		return mergedArray;
+		
+	}
+}
