@@ -1,0 +1,8 @@
+package kargerMinCut;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class Graph {
+	HashMap<Node,ArrayList<Node>> adjList = new HashMap<Node,ArrayList<Node>>();
+}
