@@ -1,7 +1,5 @@
 package kargerMinCut;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 public class KargerMinCut {
@@ -28,22 +26,7 @@ public class KargerMinCut {
 	public Node[] getRandomEdge(Graph graph){
 		String[] keys= (String[])graph.adjMap.keySet().toArray();
 		Random rand = new Random();
-		String randomKey = keys[rand.nextInt(keys.length)];
-		String removeL = randomKey.replace("[","");
-		String removeLR = removeL.replace("]", "");
-		String[] keyStringArray = removeLR.split(",");
-		ArrayList<Integer> id = new ArrayList<Integer>();
-		for(String partKey : keyStringArray){
-			id.add(Integer.parseInt(partKey));
-		}
-		
-		Node n1 = new Node(id);
-		//Second vertex should be adjacent to Node n1, so take a random node from its values
-		ArrayList<Node> n1Values =	graph.adjMap.get(n1);
-		int index = rand.nextInt(n1Values.size());
-		Node n2 = n1Values.get(index);
-		Node[] edge = {n1, n2};
-		return edge;
+		Node n1 = keys[rand.nextInt(keys.length)];
 		
 	}
 	

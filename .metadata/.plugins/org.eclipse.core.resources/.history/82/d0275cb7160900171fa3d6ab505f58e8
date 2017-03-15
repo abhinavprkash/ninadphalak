@@ -38,12 +38,9 @@ public class KargerMinCut {
 		}
 		
 		Node n1 = new Node(id);
-		//Second vertex should be adjacent to Node n1, so take a random node from its values
 		ArrayList<Node> n1Values =	graph.adjMap.get(n1);
-		int index = rand.nextInt(n1Values.size());
-		Node n2 = n1Values.get(index);
-		Node[] edge = {n1, n2};
-		return edge;
+		int index = rand.nextInt(n1Values.length)
+		
 		
 	}
 	
