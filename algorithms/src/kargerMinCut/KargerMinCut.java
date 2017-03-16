@@ -1,8 +1,13 @@
 package kargerMinCut;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
+
 
 public class KargerMinCut {
 /*	Karger Algorithm:
@@ -20,31 +25,105 @@ public class KargerMinCut {
 			/* To pick a random edge, we will pick a random key i.e vertex and then iterate over the value and pick a random node
 			 * So our (vertex,node) will be the random edge selected
 			 */
+			Node[] randomEdge = getRandomEdge(graph);
+			System.out.println("Random Edge is: " + randomEdge[0].toString() + ", " + randomEdge[1].toString());
+			contract(graph, randomEdge);
+			removeSelfLoops(graph);
+			System.out.println("Contracted graph is: " + "\n" + graph.toString());
 			
 		}
-		return 0;
+		return minCut(graph);
+		
+	}
+	public static int minCut(Graph graph){
+		//Means graph already has less than two vertices, number of adjacent nodes is equal to minCut
+		Map.Entry<Node, ArrayList<Node>> entry= graph.adjMap.entrySet().iterator().next();
+		//Now find number of values in entry
+		return entry.getValue().size();
 	}
 	
-	public Node[] getRandomEdge(Graph graph){
-		String[] keys= (String[])graph.adjMap.keySet().toArray();
+	public static Node[] getRandomEdge(Graph graph){
+
+		Node[] edge = new Node[2];
 		Random rand = new Random();
-		String randomKey = keys[rand.nextInt(keys.length)];
-		String removeL = randomKey.replace("[","");
-		String removeLR = removeL.replace("]", "");
-		String[] keyStringArray = removeLR.split(",");
-		ArrayList<Integer> id = new ArrayList<Integer>();
-		for(String partKey : keyStringArray){
-			id.add(Integer.parseInt(partKey));
+		int randomIndex = rand.nextInt(graph.adjMap.keySet().size());
+		int i = 0;
+		//**iterate over the graph keys(vertices) until i == randomIndex**
+		for(Node n : graph.adjMap.keySet()){
+			if(i == randomIndex){
+				edge[0] = n;
+			}
+			i++;
 		}
-		
-		Node n1 = new Node(id);
-		//Second vertex should be adjacent to Node n1, so take a random node from its values
-		ArrayList<Node> n1Values =	graph.adjMap.get(n1);
-		int index = rand.nextInt(n1Values.size());
-		Node n2 = n1Values.get(index);
-		Node[] edge = {n1, n2};
+
+		ArrayList<Node> rndNodeValues =	graph.adjMap.get(edge[0]);
+		int randomIndex2 = rand.nextInt(rndNodeValues.size());
+		edge[1] = rndNodeValues.get(randomIndex2);
 		return edge;
 		
+	}
+	
+	public static void contract(Graph graph, Node[] edge){
+		ArrayList<Node> startVertexAdjList = new ArrayList<Node>(graph.adjMap.get(edge[0]));
+		ArrayList<Node> endVertexAdjList = new ArrayList<Node>(graph.adjMap.get(edge[1]));
+		//For contraction: Remove edge[1] from startVertexAdjList and edge[0] from endVertexAdjList and take union of remaining values
+		ArrayList<Node> startVertexAdjListMod = removeVertex(startVertexAdjList,edge[1]);
+		ArrayList<Node> endVertexAdjListMod = removeVertex(endVertexAdjList,edge[0]);
+		//merge above two modified lists into one super list
+		ArrayList<Node> mergedAdjList = new ArrayList<Node>();
+		mergedAdjList.addAll(startVertexAdjListMod);
+		mergedAdjList.addAll(endVertexAdjListMod);		
+		ArrayList<Integer> superNodeList = new ArrayList<Integer>();
+		superNodeList.addAll(edge[0].getId());
+		superNodeList.addAll(edge[1].getId());
+		Node superNode = new Node(superNodeList);
+		//remove original edge vertices and add superNode
+		graph.adjMap.remove(edge[0]);
+		graph.adjMap.remove(edge[1]);
+		graph.adjMap.put(superNode,mergedAdjList);
+		//the superNode needs to replace each occurrence of original nodes in the graph
+		replaceWithSuperNode(graph,edge,superNode);
+		
+	}
+	
+	public static void replaceWithSuperNode(Graph graph, Node[] edge,Node superNode){
+		//Replace all occurrences of original two edge nodes with superNode
+		Iterator<Map.Entry<Node,ArrayList<Node>>> iter = graph.adjMap.entrySet().iterator();
+		while(iter.hasNext()){
+				Map.Entry<Node,ArrayList<Node>> entry = iter.next();
+				//Find edge nodes in the graph's values and replace them with superNode
+				Node key = entry.getKey();
+				ArrayList<Node> nodeValues = entry.getValue(); 	
+				Boolean isChanged1 = nodeValues.removeAll(Collections.singleton(edge[0]));
+				Boolean isChanged2 = nodeValues.removeAll(Collections.singleton(edge[1]));
+				nodeValues.add(superNode);
+				iter.remove();
+				//put back the same key but with the modified values containing supernode
+				graph.adjMap.put(key, nodeValues);
+			
+				}
+	}
+	
+	
+	public static void removeSelfLoops(Graph graph){
+		//If key is same as value then it is self loop
+		for(Entry<Node, ArrayList<Node>> entry : graph.adjMap.entrySet()){
+			Node key = entry.getKey();
+			ArrayList<Node> value = entry.getValue();
+			if(value.contains(key) && value.size() ==1){
+				graph.adjMap.remove(key);
+			}
+		}
+	}
+	
+	public static ArrayList<Node> removeVertex(ArrayList<Node> nodeList, Node deleteNode){
+		ArrayList<Node> modifiednodeList = new ArrayList<Node>();
+		for(Node n : nodeList){
+			if(!(n.equals(deleteNode))){
+				modifiednodeList.add(n);
+			}
+		}
+		return modifiednodeList;
 	}
 	
 	public static int getNumOfVertices(Graph g){

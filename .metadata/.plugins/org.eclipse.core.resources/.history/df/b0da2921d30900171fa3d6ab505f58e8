@@ -1,0 +1,23 @@
+package kargerMinCut;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class Graph {
+	HashMap<Node,ArrayList<Node>> adjMap = new HashMap<Node,ArrayList<Node>>();
+	
+	public Graph(HashMap<Node,ArrayList<Node>> adjMap){
+		this.adjMap = adjMap;
+	}
+	
+			
+	//Prints entire graph
+	@Override
+	public String toString(){
+	System.out.println("Graph is: ");
+	for(Entry<Node, ArrayList<Node>> entry : adjMap.entrySet()){
+		System.out.println(entry.getKey().toString() + "=>" + entry.getValue().toString());
+	}
+	}
+	
+}

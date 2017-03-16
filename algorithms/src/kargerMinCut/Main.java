@@ -18,7 +18,7 @@ public class Main {
 		Path path = Paths.get(inputPath);
 		//HashMap contains Adjacency list mapping of each vertex to it's adjacent vertices
 		//Key Point: Parallel edges between vertices are denoted by duplicate node in the ArrayList
-		HashMap<Node,ArrayList<Node>> graphMap = new HashMap<Node,ArrayList<Node>>();
+		HashMap<Node,ArrayList<Node>> adjMap = new HashMap<Node,ArrayList<Node>>();
 		try {
 			BufferedReader reader = Files.newBufferedReader(path);
 			String line = null;
@@ -30,21 +30,17 @@ public class Main {
 					adjacentNodes.add(n);
 				}
 				Node node = new Node(Integer.parseInt(nodesInLine[0]));
-				graphMap.put(node, adjacentNodes);
+				adjMap.put(node, adjacentNodes);
 			}
 			
 		} catch (IOException e) {
 			
 			e.printStackTrace();
 		}
-/*		
-  		//Prints entire graph
-		System.out.println("Graph input is given as: ");
-		for(Entry<Node, ArrayList<Node>> entry : graphMap.entrySet()){
-			System.out.println(entry.getKey().toString() + "=>" + entry.getValue().toString());
-		}
-		*/
-		
+
+		Graph graph = new Graph(adjMap);
+		System.out.println("Input Graph is: " + "\n" + graph.toString());
+		KargerMinCut.kargerMinCut(graph);
 		
 
 	}
