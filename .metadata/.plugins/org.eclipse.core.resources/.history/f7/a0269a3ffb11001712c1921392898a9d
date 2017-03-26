@@ -1,0 +1,12 @@
+package stronglyConnectedComponents;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class Graph {
+	HashMap<Node,ArrayList<Node>> map = new HashMap<>();
+	
+	public static void addEdge(Integer fromVertex, Integer toVertex, Graph graph){
+		
+	}
+}

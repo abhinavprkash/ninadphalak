@@ -1,0 +1,8 @@
+package stronglyConnectedComponents;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class Graph {
+	HashMap<Node,ArrayList<Node>> graph = new HashMap<>();
+}

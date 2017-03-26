@@ -14,6 +14,10 @@ public class Graph {
 		this.adjMap = adjMap;
 	}
 
+	public Graph() {
+		// TODO Auto-generated constructor stub
+	}
+
 	// Prints entire graph
 	@Override
 	public String toString() {
@@ -24,5 +28,10 @@ public class Graph {
 			result.append(pair);
 		}
 		return result.toString();
+	}
+
+	public void add(Graph secondGraph) {
+
+		this.adjMap.putAll(secondGraph.adjMap);
 	}
 }
