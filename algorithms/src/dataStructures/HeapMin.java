@@ -27,28 +27,44 @@ public class HeapMin {
 	}
 	public void heapify(int nodeIndex){
 		//Node at nodeIndex is not at correct position and assume left and right subtree are min-heaps already
-		if(nodeIndex)
+		if(isLeaf(nodeIndex)){
+			return;
+		}
 		Node node = this.heap.get(nodeIndex);
 		//left and right child of Node are at 2i+1 and 2i+2 respectively
-		int leftIndex = 2 * nodeIndex + 1;
-		int rightIndex = 2 * nodeIndex + 2;
+		int leftIndex = getLeftChildIndex(nodeIndex);
+		int rightIndex = getRightChildIndex(nodeIndex);
 		
 		int minIndex = Math.min(leftIndex, rightIndex);
 		//swap Node at nodeIndex with it's minimum child
 		Node minChild = this.heap.get(minIndex);
 		if(minChild.getNodeId() > node.getNodeId()){
-			// swap them and sift paretn(node) down
+			// swap them and sift parent(node) down
 			this.heap.set(nodeIndex, minChild);
 			this.heap.set(minIndex, node);
 			
 			nodeIndex= minIndex;
 			heapify(nodeIndex);
-			/*
-			node = this.heap.get(nodeIndex);
-			leftIndex = 2 * nodeIndex + 1;
-			rightIndex = 2 * nodeIndex + 2;
-			minIndex = Math.min(leftIndex, rightIndex);
-	*/	}
+		}
+		
+	}
+	
+	private boolean isLeaf(int nodeIndex){
+		//For a tree with size n, leaf nodes will be at (n/2) to n
+		int treeSize = this.heap.size() -1;
+		int leafStart = treeSize / 2;
+		if(nodeIndex > leafStart && nodeIndex < treeSize){
+			return true;
+		}
+		return false;
+	}
+	
+	private int getLeftChildIndex(int parentIndex){
+		return parentIndex * 2 + 1;
+	}
+	
+	private int getRightChildIndex(int parentIndex){
+		return parentIndex * 2 + 2;
 	}
 
 	private int getParentIndex(int childIndex) {
