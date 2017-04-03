@@ -1,0 +1,20 @@
+package stronglyConnectedComponents;
+
+
+public class DFS {
+
+	public static void dfs(Graph graph,Node v){
+	
+	}
+	
+	
+	private static void dfs(Graph graph,Node v){		
+		//mark v as explored
+		v.explored=true;
+		
+	}
+}
+
+		
+		
+		

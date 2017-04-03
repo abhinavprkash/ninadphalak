@@ -1,0 +1,30 @@
+package stronglyConnectedComponents;
+
+import java.util.ArrayList;
+
+public class DFS {
+
+	public static void depthFirstSearch(Graph graph, Node v) {
+
+		graph.resetNodesToUnexplored();
+		dfs(graph, v);
+	}
+
+	private static void dfs(Graph graph, Node v) {
+
+		// mark v as explored
+		if(v.explored == false){
+			System.out.println("Visited Node: " + v.toString());
+			v.explored = true;
+		}
+		// for each edge(v,w), if w is unexplored call dfs on w
+		ArrayList<Node> adjNodes = graph.edgeMap.get(v);
+		if (adjNodes!=null) {
+			for (Node n : adjNodes) {
+				if (n.explored == false) {
+					dfs(graph, n);
+				}
+			}
+		}
+	}
+}

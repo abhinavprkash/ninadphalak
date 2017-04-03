@@ -1,0 +1,24 @@
+package stronglyConnectedComponents;
+
+import java.util.ArrayList;
+
+public class DFS {
+
+	public static void deapthFirstSearch(Graph graph,Node v){
+		graph.markNodesUnexplored();
+		dfs(graph,v);
+	}
+	
+	
+	private static void dfs(Graph graph,Node v){		
+		//mark v as explored
+		v.explored=true;
+		//for each edge(v,w), if w is unexplored call dfs on w
+		ArrayList<Node> abxc = graph.edgeMap.get(v);
+			
+	}
+}
+
+		
+		
+		

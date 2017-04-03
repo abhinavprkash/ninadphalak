@@ -1,0 +1,105 @@
+package stronglyConnectedComponents;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+public class DFS {
+
+	public static int finishingTimeGlobal;
+	public static Node leaderGlobal;
+	public static ArrayList<Node> sortedWithFinishingTime = new ArrayList<Node>();
+	public static int[] sscLargestFive = new int;
+	static int ssc = 0;
+
+	public static void depthFirstSearch(Graph graph, Node v) {
+
+		dfs(graph, v);
+	}
+
+	public void dfsTwoPass(Graph graph, Graph revGraph) {
+
+		// First Pass
+		finishingTimeGlobal = 0;
+		leaderGlobal = null;
+		graph.resetToUnexplored();
+		for (Node node : graph.nodeList) {
+			dfsLoop(revGraph, node, true);
+		}
+		// Now we got all the finishing times. Do a second dfs pass with
+		// decreasing order of finishing times
+		graph.resetToUnexplored();
+		for (int j = sortedWithFinishingTime.size() - 1; j >= 0; j--) {
+			ssc++;
+			Node n = sortedWithFinishingTime.get(j);
+			dfsLoop(graph, n, false);
+		}
+	}
+
+	public static void dfsLoop(Graph graph, Node node, boolean isFirstPass) {
+
+		Boolean isExplored = graph.isExploredMap.get(node);
+		// if node is not yet explored
+		
+		if (!isExplored) {
+			
+			if(!isFirstPass){
+				//add ssc count to sscList and reset ssc. Then iterate over sscList to get top 5 ssc
+				sscList.add(ssc);
+				ssc=0;
+			}
+			leaderGlobal = node;
+			modifiedDfs(graph, node, isFirstPass);
+		}
+	}
+
+	private static void modifiedDfs(Graph graph, Node v, boolean isFirstPass) {
+
+		// mark v as explored
+		if (graph.isExploredMap.get(v) == false) {
+			System.out.println("Visited Node: " + v.toString());
+			// mark v as explored
+			graph.isExploredMap.put(v, true);
+			// in second pass we have to keep track of the leader
+			if (!isFirstPass) {
+				// set leader(v) = leader
+				v.leader = leaderGlobal;
+			}
+		}
+		// for each edge(v,w), if w is unexplored call dfs on w
+		ArrayList<Node> adjNodes = graph.edgeMap.get(v);
+		if (adjNodes != null) {
+			for (Node n : adjNodes) {
+				if (graph.isExploredMap.get(n) == false) {
+					modifiedDfs(graph, n, isFirstPass);
+				}
+			}
+		}
+		finishingTimeGlobal++;
+		v.finishingTime = finishingTimeGlobal;
+		// in the first pass we have to keep track of the finishing time
+		if (isFirstPass) {
+			sortedWithFinishingTime.add(v);
+		}
+	}
+
+	private static void dfs(Graph graph, Node v) {
+
+		// mark v as explored
+		if (graph.isExploredMap.get(v) == false) {
+			System.out.println("Visited Node: " + v.toString());
+			// mark v as explored
+			graph.isExploredMap.put(v, true);
+		}
+		// for each edge(v,w), if w is unexplored call dfs on w
+		ArrayList<Node> adjNodes = graph.edgeMap.get(v);
+		if (adjNodes != null) {
+			for (Node n : adjNodes) {
+				if (graph.isExploredMap.get(n) == false) {
+					dfs(graph, n);
+				}
+			}
+		}
+	}
+}

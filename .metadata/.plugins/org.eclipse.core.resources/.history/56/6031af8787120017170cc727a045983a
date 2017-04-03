@@ -1,0 +1,25 @@
+package stronglyConnectedComponents;
+
+
+public class Node {
+	Integer nodeId;
+	boolean explored = false;
+	
+	public Node(int nodeId){
+		this.nodeId = nodeId;
+	}
+	public Node(){
+		
+	}
+	
+	public void markUnexplored(){
+		this.explored=false;
+	}
+	
+
+	@Override
+	public String toString() {
+
+		return nodeId.toString();
+	}
+}

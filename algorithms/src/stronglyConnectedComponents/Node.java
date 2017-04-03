@@ -1,11 +1,69 @@
 package stronglyConnectedComponents;
 
-
 public class Node {
-	int nodeId;
-	boolean explored = false;
-	
-	public Node(int nodeId){
+
+	Integer nodeId;
+	Node leader;
+	int finishingTime;
+
+	public Node(int nodeId) {
+		this.nodeId = nodeId;
+	}
+
+	public Node() {
+	}
+
+	@Override
+	public String toString() {
+
+		return nodeId.toString();
+	}
+
+	@Override
+	public boolean equals(Object other) {
+
+		if (!(other instanceof Node)) {
+			return false;
+		}
+		Node otherNode = (Node) other;
+		return this.nodeId.equals(otherNode.nodeId);
+	}
+
+	@Override
+	public int hashCode() {
+
+		int hashCode = 1;
+		hashCode = hashCode * 37 + this.nodeId.hashCode();
+		return hashCode;
+	}
+
+	public Node getLeader() {
+
+		return leader;
+	}
+
+	public void setLeader(Node leader) {
+
+		this.leader = leader;
+	}
+
+	public int getFinishingTime() {
+
+		return finishingTime;
+	}
+
+	public void setFinishingTime(int finishingTime) {
+
+		this.finishingTime = finishingTime;
+	}
+
+	public Integer getNodeId() {
+
+		return nodeId;
+	}
+
+	public void setNodeId(Integer nodeId) {
+
 		this.nodeId = nodeId;
 	}
 }

@@ -1,0 +1,77 @@
+package stronglyConnectedComponents;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+public class DFS {
+
+	public static int finishingTimeGlobal;
+	public static Node leaderGlobal;
+
+	public static void depthFirstSearch(Graph graph, Node v) {
+
+		dfs(graph, v);
+	}
+
+	public static void dfs_loop(Graph graph){
+		finishingTimeGlobal = 0;
+		leaderGlobal = null;
+		//isExploredMap will also contain list of all nodes, use that same data structure got iterating over all nodes of the graph
+		Iterator<Map.Entry<Node,Boolean>> iterIsExploredMap = graph.isExploredMap.entrySet().iterator();
+		
+		for(Node node : graph.nodeList){
+			Boolean isExplored = graph.isExploredMap.get(node);
+			 //if node is not yet explored	
+			 if(!isExplored){
+				 leaderGlobal = node;
+				 modifiedDfs(graph,node);
+			 }
+		}
+		
+			
+	}
+
+	private static void modifiedDfs(Graph graph, Node v) {
+
+		// mark v as explored
+		if (graph.isExploredMap.get(v) == false) {
+			System.out.println("Visited Node: " + v.toString());
+			// mark v as explored
+			graph.isExploredMap.put(v, true);
+			//set leader(v) = leader
+			v.leader = leaderGlobal;
+		}
+		// for each edge(v,w), if w is unexplored call dfs on w
+		ArrayList<Node> adjNodes = graph.edgeMap.get(v);
+		if (adjNodes != null) {
+			for (Node n : adjNodes) {
+				if (graph.isExploredMap.get(n) == false) {
+					dfs(graph, n);
+				}
+			}
+		}
+		finishingTime++;
+		v.finishingTime = finis
+	}
+
+	private static void dfs(Graph graph, Node v) {
+
+		// mark v as explored
+		if (graph.isExploredMap.get(v) == false) {
+			System.out.println("Visited Node: " + v.toString());
+			// mark v as explored
+			graph.isExploredMap.put(v, true);
+		}
+		// for each edge(v,w), if w is unexplored call dfs on w
+		ArrayList<Node> adjNodes = graph.edgeMap.get(v);
+		if (adjNodes != null) {
+			for (Node n : adjNodes) {
+				if (graph.isExploredMap.get(n) == false) {
+					dfs(graph, n);
+				}
+			}
+		}
+	}
+}
