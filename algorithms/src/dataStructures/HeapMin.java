@@ -50,13 +50,20 @@ public class HeapMin {
 	}
 	
 	private boolean isLeaf(int nodeIndex){
-		//For a tree with size n, leaf nodes will be at (n/2) to n
-		int treeSize = this.heap.size() -1;
-		int leafStart = treeSize / 2;
-		if(nodeIndex > leafStart && nodeIndex < treeSize){
-			return true;
+		//A leaf has a left or a right child
+		if(hasLeftChild(nodeIndex) || hasRightChild(nodeIndex)){
+			return false;
 		}
-		return false;
+		return true;
+	}
+	
+	private boolean hasLeftChild(int parentIndex){
+		return getLeftChildIndex(parentIndex) < this.heap.size();
+	}
+	
+	
+	private boolean hasRightChild(int parentIndex){
+		return getRightChildIndex(parentIndex) < this.heap.size();
 	}
 	
 	private int getLeftChildIndex(int parentIndex){
