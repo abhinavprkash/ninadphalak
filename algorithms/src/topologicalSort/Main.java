@@ -26,6 +26,7 @@ public class Main {
 			Integer startNodeId = Integer.parseInt(edge[0]);
 			Integer endNodeId = Integer.parseInt(edge[1]);
 			graph.addEdge(startNodeId, endNodeId);
+			
 		}
 		System.out.println("Stored Graph: " + '\n' + graph.toString());
 		System.out.println("DFS of graph is: \n");
@@ -34,9 +35,10 @@ public class Main {
 		BFS.searchGraph(graph);
 		System.out.println("\nTopologically sorted graph is: ");
 		topologicalSort.sort(graph);
-		for(Node n : graph.allNodes){
-			System.out.println(n.toString() + " has finishingLabel: "+  n.finishingLabel);
-		}
+		
+		//Cycle detect below
+		Boolean isCycle = DFSDetectCycle.search(graph);
+		System.out.println("\n Does Graph have a cycle?: " + isCycle);
 		
 		
 	}

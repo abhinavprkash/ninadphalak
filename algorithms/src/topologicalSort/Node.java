@@ -1,12 +1,10 @@
 package topologicalSort;
 
-import java.util.ArrayList;
 
 public class Node {
 	Integer id;
-	ArrayList<Node> adjNodes = new ArrayList<Node>();
-	Boolean isVisited = false;
 	Integer finishingLabel = null;
+	Boolean isOnStack = false;
 	
 	
 	public Node(int id){
@@ -34,13 +32,6 @@ public class Node {
 		return hashCode;
 	}
 	//Getters and Setters
-	public ArrayList<Node> getAdjNodes() {
-		return adjNodes;
-	}
-
-	public void setAdjNodes(ArrayList<Node> adjNodes) {
-		this.adjNodes = adjNodes;
-	}
 	public Integer getLabel(){
 		return this.finishingLabel;
 	}
@@ -48,12 +39,6 @@ public class Node {
 	public  void setLabel(Integer newLabel){
 		this.finishingLabel = newLabel;
 	}
-	public Boolean IsVisited() {
-		return isVisited;
-	}
-
-	public void setVisited(Boolean isVisited) {
-		this.isVisited = isVisited;
-	}
+	
 
 }

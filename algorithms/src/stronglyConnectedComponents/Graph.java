@@ -12,8 +12,6 @@ public class Graph {
 
 	public HashMap<Node, ArrayList<Node>> edgeMap = new HashMap<Node, ArrayList<Node>>();
 	public HashMap<Node, Boolean> isExploredMap = new HashMap<Node, Boolean>();
-	// nodeList is not strictly necessary, but I have added it for better code
-	// readability during dfs_loop()
 	public Set<Node> nodeList = new HashSet<Node>();
 
 	public void addEdge(Integer fromVertex, Integer toVertex) {
