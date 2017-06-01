@@ -4,8 +4,7 @@ package topologicalSort;
 public class Node {
 	Integer id;
 	Integer finishingLabel = null;
-	Boolean isOnStack = false;
-	
+
 	
 	public Node(int id){
 		this.id = id;
