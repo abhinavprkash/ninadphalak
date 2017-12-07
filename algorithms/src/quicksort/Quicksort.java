@@ -80,25 +80,26 @@ public class Quicksort {
 		numbers[secondIndex] = temp;
 	}
 
-	private static int medianOfThree(int n1, int n2, int n3){
-		
-	if(n1 > n2){
-				if(n1 > n3){
-					return n2>n3?n2:n3;
+	public static int medianOfThree(int a,int b, int c){
+		/*		1. a greatest{ return larger  (b,c)
+				2. b greatest{return larger (a,c)}
+				3. c is greatest{return larger of (a,b)*/
+				if(a>b){
+					if(a>c){
+						return b>c? b:c;
+					}
+					else {return a;}//a is middle
+					
 				}
-				else if(n2<n3){
-					return n1>n2?n1:n2;
-				}
-				else{ return n1>n3?n1:n3;}}
+				else{//b greater than a
+					if(b>c){
+						return a>c? a : c ;
+						
+					}
+					else{ return b;} // b is middle
+						
+					}
+	
 				
-			else{
-				if(n2 < n3){
-					return n1>n2? n1:n2;
-				}
-				else{
-					return n1>n3?n1:n3;
-				}
 			}
-
-	 }
 }

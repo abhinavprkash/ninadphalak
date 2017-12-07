@@ -8,10 +8,10 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 
 public class Main {
-	
-	public static void main(String args[]){
-		
-		//int[] inputArray = {1, 2, 3, 4, 5, 6, 7 , 8};
+
+	public static void main(String args[]) {
+
+		// int[] inputArray = {1, 2, 3, 4, 5, 6, 7 , 8};
 		Path path = Paths.get(args[0]);
 		int n = 10000;
 		int inputArray[] = new int[n];
@@ -19,16 +19,15 @@ public class Main {
 		try {
 			BufferedReader reader = Files.newBufferedReader(path);
 			String line = null;
-			while((line = reader.readLine()) != null){
+			while ((line = reader.readLine()) != null) {
 				inputArray[i++] = Integer.parseInt(line);
 			}
 		} catch (IOException e) {
-			
+
 			e.printStackTrace();
 		}
-		
-		
-		int numComparisons= Quicksort.sort(inputArray,0,inputArray.length);
+
+		int numComparisons = Quicksort.sort(inputArray, 0, inputArray.length);
 		System.out.println("Sorted Array is: " + Arrays.toString(inputArray));
 		System.out.println("numComparisons: " + numComparisons);
 	}
